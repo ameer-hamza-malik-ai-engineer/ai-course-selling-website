@@ -1,0 +1,6 @@
+{
+  "name": "Course Selling Platform",
+  "description": "A modern, high-fidelity platform for exploring, buying, and learning professional courses, featuring a fully functional Stripe checkout integration (with secure server-side routes and robust sandbox fallbacks) and an interactive dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
