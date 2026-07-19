@@ -10,6 +10,7 @@ import CheckoutSandbox from './components/CheckoutSandbox';
 import StripeDevPanel from './components/StripeDevPanel';
 import CreatorPanel from './components/CreatorPanel';
 import AuthScreen from './components/AuthScreen';
+import PoliciesModal from './components/PoliciesModal';
 
 import { Course, UserEnrollment, StripeTransaction, User } from './types';
 
@@ -28,6 +29,7 @@ export default function App() {
   // Modal & Selection States
   const [selectedCourseDetail, setSelectedCourseDetail] = useState<Course | null>(null);
   const [sandboxActiveCourse, setSandboxActiveCourse] = useState<Course | null>(null);
+  const [policiesModalTab, setPoliciesModalTab] = useState<'terms' | 'privacy' | 'refund' | 'contact' | null>(null);
   
   // Authentication states
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -520,11 +522,40 @@ export default function App() {
             <div className="text-sm font-black text-white">Vercel</div>
             <div className="text-sm font-black text-white">Airbnb</div>
           </div>
-          <div className="flex items-center gap-4 text-xs text-white/40 font-medium">
-            <span>Terms</span>
-            <span>Privacy</span>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/40 font-medium">
+            <button 
+              type="button"
+              onClick={() => setPoliciesModalTab('terms')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              Terms of Service
+            </button>
             <span className="w-1 h-1 bg-white/20 rounded-full"></span>
-            <span>&copy; {new Date().getFullYear()} Academy Inc.</span>
+            <button 
+              type="button"
+              onClick={() => setPoliciesModalTab('privacy')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              Privacy Policy
+            </button>
+            <span className="w-1 h-1 bg-white/20 rounded-full"></span>
+            <button 
+              type="button"
+              onClick={() => setPoliciesModalTab('refund')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              Refund Policy
+            </button>
+            <span className="w-1 h-1 bg-white/20 rounded-full"></span>
+            <button 
+              type="button"
+              onClick={() => setPoliciesModalTab('contact')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              Contact Support
+            </button>
+            <span className="w-1 h-1 bg-white/20 rounded-full"></span>
+            <span>&copy; {new Date().getFullYear()} Aura Academy Inc.</span>
           </div>
         </div>
       </footer>
@@ -549,6 +580,14 @@ export default function App() {
           course={sandboxActiveCourse}
           onCancel={() => setSandboxActiveCourse(null)}
           onSuccess={handleSandboxSuccess}
+        />
+      )}
+
+      {/* Compliance Policies Modal */}
+      {policiesModalTab && (
+        <PoliciesModal 
+          initialTab={policiesModalTab}
+          onClose={() => setPoliciesModalTab(null)}
         />
       )}
 

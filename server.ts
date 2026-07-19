@@ -81,7 +81,8 @@ const courses = [
             id: 'gemini-l4',
             title: '2.1 Function Calling: Connecting Models to Real Databases',
             duration: '18:45',
-            type: 'article',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/movie.mp4',
             content: '### Executing Real-Time Local Functions\n\nFunction calling turns generative models into active agents. Instead of hallucinating values, the model returns a structured JSON calling payload outlining which local function to execute with what arguments.\n\n#### Declaring Tools for Gemini\nProvide tool definitions during generation calls:\n\n```typescript\nconst databaseQueryTool = {\n  functionDeclarations: [{\n    name: "queryProductStock",\n    description: "Get real-time warehouse inventory count for a specific SKU ID",\n    parameters: {\n      type: "OBJECT",\n      properties: {\n        skuId: { type: "STRING", description: "The product SKU code, e.g., PROD-492" }\n      },\n      required: ["skuId"]\n    }\n  }]\n};\n\nasync function inventoryAgent(userInput: string) {\n  const ai = getAI();\n  const response = await ai.models.generateContent({\n    model: "gemini-2.5-flash",\n    contents: userInput,\n    config: {\n      tools: [databaseQueryTool]\n    }\n  });\n\n  const call = response.functionCalls?.[0];\n  if (call && call.name === "queryProductStock") {\n    const { skuId } = call.args as { skuId: string };\n    const realStockCount = await myDatabase.getStock(skuId); // Real systems database query\n    \n    // Send the query result back to the model to synthesize a final answer!\n  }\n}\n```'
           },
           {
@@ -180,7 +181,8 @@ const courses = [
             id: 'react-l3',
             title: '1.3 Mastering Form Actions & Action State',
             duration: '18:10',
-            type: 'article',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
             content: '### Handling State Transitions in React 19\n\nReact 19 simplifies async operations inside forms using Native Actions. No more manual `setIsLoading(true)` and `try/catch` wrappers on form submit buttons!\n\n#### Using the useActionState Hook\nThe new `useActionState` hook (formerly `useFormState`) tracks action execution, pending status, and returning payloads automatically.\n\n```typescript\nimport { useActionState } from "react";\nimport { submitEnrollmentAction } from "./actions";\n\nexport default function SignupForm() {\n  // useActionState receives (actionFunction, initialState)\n  const [state, formAction, isPending] = useActionState(\n    async (prevState: any, formData: FormData) => {\n      const email = formData.get("email");\n      const response = await submitEnrollmentAction(email);\n      return response; // returns new state\n    },\n    { success: false, error: null }\n  );\n\n  return (\n    <form action={formAction} className="space-y-4">\n      <input name=\"email\" type=\"email\" required className=\"bg-white/5 border border-white/10 text-white rounded-xl p-3\" />\n      \n      <button \n        type=\"submit\" \n        disabled={isPending}\n        className=\"bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-3 rounded-xl disabled:opacity-50\"\n      >\n        {isPending ? \"Submitting Enrollment...\" : \"Register Now\"}\n      </button>\n\n      {state.error && <p className=\"text-rose-400 text-xs\">{state.error}</p>}\n      {state.success && <p className=\"text-emerald-400 text-xs\">Successfully Enrolled!</p>}\n    </form>\n  );\n}\n```'
           },
           {
@@ -216,6 +218,185 @@ const courses = [
                   'useActionState()',
                   'useMemo()',
                   'useContext()'
+                ],
+                correctAnswer: 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'course-typescript-adv',
+    title: 'Advanced TypeScript & Type-Safe Architecture',
+    description: 'Master high-level type gymnastics, mapped types, advanced generics, and structural software designs for modern enterprise stacks.',
+    longDescription: 'Accelerate your software engineering mastery by developing truly resilient, self-documenting applications. In this course, you will conquer advanced TypeScript concepts including conditional types, template literal types, custom decorators, and structural engineering patterns that prevent bugs at compile-time instead of runtime. Perfect for senior frontend engineers, team leads, and system designers.',
+    category: 'Development',
+    level: 'Advanced',
+    price: 79,
+    originalPrice: 199,
+    rating: 4.92,
+    reviewsCount: 640,
+    duration: '12h 45m',
+    lessonsCount: 4,
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+    badge: 'New',
+    instructor: {
+      name: 'Sarah Drasner',
+      role: 'Principal Language Engineer',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
+      bio: 'Sarah is a renowned compiler designer and language architect who has spent 12 years building type systems. She sits on advisory boards for developer tools and teaches thousands of students.',
+      rating: 4.96,
+      studentsCount: 22100,
+      coursesCount: 2
+    },
+    outcomes: [
+      'Construct high-level custom generic utilities utilizing conditional and mapped types',
+      'Design type-safe API routers that prevent runtime exceptions using static assertions',
+      'Implement compile-time structural patterns for state management validation',
+      'Conquer Template Literal Types to dynamically build types from string patterns'
+    ],
+    modules: [
+      {
+        id: 'ts-m1',
+        title: 'Module 1: High-Level Type Gymnastics',
+        lessons: [
+          {
+            id: 'ts-l1',
+            title: '1.1 Deep Dive: Generics, Extends, and Constraints',
+            duration: '11:20',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            content: 'In this welcoming lesson, we unpack advanced generic bounds, structural typing rules, and how constraints provide powerful safety mechanisms.'
+          },
+          {
+            id: 'ts-l2',
+            title: '1.2 Advanced Mapped & Template Literal Types',
+            duration: '15:40',
+            type: 'article',
+            content: '### Mastering Mapped Types and String Literals\n\nTypeScript offers incredibly powerful tools to map and transform existing keys into new type structures dynamically.\n\n#### Template Literal Types\nStarting in TypeScript 4.1, you can combine template literal string signatures with type mapping:\n\n```typescript\ntype Direction = "top" | "bottom" | "left" | "right";\ntype PaddingKey = `padding-${Direction}`;\n// Resolves to: "padding-top" | "padding-bottom" | "padding-left" | "padding-right"\n```'
+          }
+        ]
+      },
+      {
+        id: 'ts-m2',
+        title: 'Module 2: Type-Safe Software Architecture',
+        lessons: [
+          {
+            id: 'ts-l3',
+            title: '2.1 Building a Type-Safe Server Response Proxy',
+            duration: '19:15',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/movie.mp4',
+            content: '### Securing Routing with Brand Types\n\nBranded types allow developers to create unique types from primitive strings, ensuring values like Email, UserId, or Currency are not interchangeable.\n\n```typescript\ntype Brand<K, T> = K & { __brand: T };\ntype EmailAddress = Brand<string, "EmailAddress">;\n\nfunction validateEmail(email: string): EmailAddress {\n  if (!email.includes("@")) throw new Error("Invalid format");\n  return email as EmailAddress;\n}\n```'
+          },
+          {
+            id: 'ts-l4',
+            title: '2.2 Quiz: Advanced Compiler Options and Utility Types',
+            duration: '08:00',
+            type: 'quiz',
+            quizQuestions: [
+              {
+                question: 'Which TS config flag enforces that all variables must have an explicit or inferred type, disabling the fallback "any"?',
+                options: [
+                  'strictNullChecks',
+                  'noImplicitAny',
+                  'noImplicitReturns',
+                  'allowJs'
+                ],
+                correctAnswer: 1
+              },
+              {
+                question: 'What is a "Branded Type" used for in advanced TypeScript?',
+                options: [
+                  'To add a marketing logo or copyright notice to your compiled JavaScript files.',
+                  'To uniquely tag primitive values so they cannot be accidentally interchanged at compile-time.',
+                  'To translate TypeScript types into Python classes.',
+                  'To encrypt database keys securely in Node.js server directories.'
+                ],
+                correctAnswer: 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'course-nextjs-secure',
+    title: 'Secure DevOps & Cloud Container Infrastructure',
+    description: 'Master full-stack Docker orchestration, secure Linux headers, environment variables isolation, and automated Cloud Run workflows.',
+    longDescription: 'Become an indispensable cloud developer. In this comprehensive course, you will learn the exact devops standards required to build, compile, bundle, and deploy fully secure production applications on container systems. Master secret managers, SSL handshakes, reverse proxies, and automated CI/CD pipelines.',
+    category: 'Cloud Computing',
+    level: 'Advanced',
+    price: 149,
+    originalPrice: 349,
+    rating: 4.88,
+    reviewsCount: 390,
+    duration: '18h 20m',
+    lessonsCount: 3,
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800',
+    badge: 'Trending',
+    instructor: {
+      name: 'Marcus Vance',
+      role: 'Principal Infrastructure Architect & Devops Lead',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200',
+      bio: 'Marcus has over 15 years designing high-availability cloud topologies. Formerly the Devops lead at major financial platforms, he specializes in secure ingress routing and automated pipeline compliance.',
+      rating: 4.91,
+      studentsCount: 15300,
+      coursesCount: 4
+    },
+    outcomes: [
+      'Construct optimized Docker multi-stage build files that reduce image sizes',
+      'Implement reverse proxy ingress routing to secure server-side credentials',
+      'Deploy fully scalable, zero-coldstart applications on serverless Cloud Run systems',
+      'Analyze server headers to implement strict Content Security Policies (CSP)'
+    ],
+    modules: [
+      {
+        id: 'cloud-m1',
+        title: 'Module 1: Production Bundles & Docker Containers',
+        lessons: [
+          {
+            id: 'cloud-l1',
+            title: '1.1 Containerizing Full-Stack Node.js Applications',
+            duration: '14:10',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/movie.mp4',
+            content: '### Writing an Optimized Multi-Stage Dockerfile\n\nWhen deploying a containerized application, reducing image sizes is critical for fast deployment and container auto-scaling.\n\n```dockerfile\n# Stage 1: Build\nFROM node:18-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nCOPY . .\nRUN npm run build\n\n# Stage 2: Runtime\nFROM node:18-alpine AS runner\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install --only=production\nCOPY --from=builder /app/dist ./dist\nEXPOSE 3000\nCMD ["node", "dist/server.cjs"]\n```'
+          },
+          {
+            id: 'cloud-l2',
+            title: '1.2 Secure Ingress & Network Ingress Proxies',
+            duration: '16:50',
+            type: 'video',
+            videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
+            content: '### Locking Down Server Networks\n\nNever expose raw application ports to the public internet directly. Use an Nginx reverse proxy or cloud-managed load balancer to handle SSL termination, set secure headers, and filter malicious traffic.'
+          },
+          {
+            id: 'cloud-l3',
+            title: '1.3 Quiz: Production Deployment & Container Security',
+            duration: '09:30',
+            type: 'quiz',
+            quizQuestions: [
+              {
+                question: 'Why should you use multi-stage Docker builds for Node.js production deployments?',
+                options: [
+                  'To make the application run twice as fast in local development.',
+                  'To exclude compiler dependencies, reducing the final image footprint and security attack surface.',
+                  'To exclude build tools and save deployment time.',
+                  'To bypass container port configurations.'
+                ],
+                correctAnswer: 1
+              },
+              {
+                question: 'Which header should be configured to prevent clickjacking attacks on modern browsers?',
+                options: [
+                  'Content-Type',
+                  'X-Frame-Options: DENY or SAMEORIGIN',
+                  'Cache-Control',
+                  'Access-Control-Allow-Origin'
                 ],
                 correctAnswer: 1
               }
